@@ -1,129 +1,120 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
 
-# C extensions
-*.so
+fh= open("projects.txt","r") 
 
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-pip-wheel-metadata/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+curtext=fh.read;
+txtArr=curtext.split("\n")
 
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
+Projects=[]
+ProjID=[]
+ProjEmp=[]
+ProjAss=[]
+txtAss=""
+proj="\t"
+for i in range(10):
+    Projects.append(txtArr[i])
+for i in range(10, 16,1):
+    ProjEmp.append(txtArr[i])
+for i in range(16,26,1):
+    ProjID.append(txtArr[i])
+for i in range(26,32,1):
+    ProjAss.append(txtArr[i])    
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
+ch=0
+while ch<8:
+    print("___________________________________________________________ ")
+    print("Menu.. ")
+    print("___________________________________________________________ ")
+    print("1. Display Project Title by Project ID")
+    print("2. Display Project ID by Project Title")
+    print("3. Display Employees working on a project with given ID")
+    print("4. Display Projects an employee is working ")
+    print("5. Display Employees working on X number of projects")
+    print("6. Display All Projects with IDs")
+    print("7. Display all Details")
+    print("8. Exit Program")
+    ch=int(input("enter your choice--->"))
+    if (ch<0 or ch>7):
+        print("Wrong Choice")
+        ch=1
+        continue
+    if ch==1:
+        projID=input("Enter Project ID--->")
+        try:
+            print(Projects[ProjID.index(projID)])
+        except ValueError:        
+            print("No such project ID exists")
+    if ch==2:
+projName=input("Enter Project Name--->")
+        try:
+            print(ProjID[Projects.index(projName)])
+        except ValueError:        
+            print("No such project Name exists")    
+    if ch==3:
+        empNames=""
+        projID=input("Enter Project ID--->")
+        try:
+            pind= ProjID.index(projID)
+        except ValueError:        
+            print("No such project ID exists")
+            continue
+        for i in range(len(ProjEmp)):
+            pa=ProjAss[i]
+            if pa[pind]=='1':
+                empNames=empNames+(ProjEmp[i])+","
+        
+        if empNames=="":
+            print("No One is Working on this project")
+        else:    
+            print(empNames[0:len(empNames)-1])
+    if ch==4:
+        eind=""
+        proNames=""
+        empName=input("Enter Employee Name--->")
+        try:
+            eind= ProjEmp.index(empName)
+        except ValueError:        
+            print("No Employee with this name exists")
+            continue
+        for i in range(len(Projects)):
+            el=ProjAss[eind]
+            if el[i]=='1':
+                proNames=proNames+(Projects[i])+","
+        if proNames=="":
+            print("No Project Assigned")
+        else:    
+            print(proNames[0:len(proNames)-1])
+    if ch==5:
+        proNames=""
+        empCnt=int(input("Enter count of projects--->"))
+        cnt=0
+        for i in range(len(ProjEmp)):
+            premp=ProjAss[i]
+cnt=0
+            for j in range(len(Projects)):
+                if premp[j]=='1':
+                    cnt=cnt+1
+            if cnt==empCnt:
+                proNames=proNames+(ProjEmp[i])+","
 
-# Translations
-*.mo
-*.pot
-
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-target/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-.python-version
-
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
-
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow
-__pypackages__/
-
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
-
-# SageMath parsed files
-*.sage.py
-
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
+        if proNames=="":
+            print("Data Not Available")
+        else:    
+            print(proNames[0:len(proNames)-1])
+    if ch==6:
+        
+        for i in range(len(ProjID)):
+            print(ProjID[i]+"\t"+Projects[i])
+             
+    if ch==7:
+        
+        for i in range(len(ProjID)):
+            proj=proj+ProjID[i]+"\t"
+          
+        print("\t"+proj)
+        txtpp="\t"
+        for i in range(len(ProjEmp)):
+            txtAss=ProjAss[i]
+            txtAss=txtAss.replace("1","Y\t")
+            txtAss=txtAss.replace("0","N\t")
+            print(ProjEmp[i]+"\t"+txtAss)
